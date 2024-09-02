@@ -11,6 +11,8 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Mail\Mailables\Address;
+use App\Models\ExchangeRate;
+
 class ExchangeRateReport extends Mailable
 {
     use Queueable, SerializesModels;
@@ -47,9 +49,11 @@ class ExchangeRateReport extends Mailable
             view: 'emails.exchange_rate_report',
             with: [
                 'date' => now()->toDateString(),
+                'totalCurrencies' => ExchangeRate::distinct('currency_id')->count('currency_id')
             ],
         );
     }
+    
 
     /**
      * Get the attachments for the message.

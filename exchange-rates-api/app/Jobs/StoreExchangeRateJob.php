@@ -10,6 +10,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
+use Illuminate\Support\Facades\Log;
+
 class StoreExchangeRateJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -18,11 +20,6 @@ class StoreExchangeRateJob implements ShouldQueue
     protected $rate;
     protected $date;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
     public function __construct($currencyCode, $rate, $date)
     {
         $this->currencyCode = $currencyCode;
@@ -30,13 +27,10 @@ class StoreExchangeRateJob implements ShouldQueue
         $this->date = $date;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
+        Log::info("Processing job for currency: {$this->currencyCode} with rate: {$this->rate}");
+
         $currency = Currency::firstOrCreate(
             ['code' => $this->currencyCode],
             ['name' => $this->currencyCode]
@@ -47,5 +41,7 @@ class StoreExchangeRateJob implements ShouldQueue
             'date' => $this->date,
             'rate' => $this->rate,
         ]);
+
+        Log::info("Job completed for currency: {$this->currencyCode}");
     }
 }

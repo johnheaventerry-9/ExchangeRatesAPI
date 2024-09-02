@@ -9,10 +9,13 @@ class ExchangeRate extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['currency_id', 'date', 'rate'];
+
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * Get the currency that owns the exchange rate.
      */
-    protected $fillable = ['currency_id', 'date', 'rate']; // Add 'currency_id', 'date', and 'rate'
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
 }

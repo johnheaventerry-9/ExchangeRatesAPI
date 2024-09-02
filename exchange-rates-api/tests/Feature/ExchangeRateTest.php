@@ -37,7 +37,7 @@ class ExchangeRateTest extends TestCase
             'rate' => 1.12,
         ]);
 
-        $response = $this->getJson('api/exchange-rates/' . now()->toDateString());
+        $response = $this->getJson('exchange-rates/' . now()->toDateString());
 
         $response->assertStatus(200)
             ->assertJson([
