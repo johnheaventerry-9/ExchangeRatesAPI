@@ -8,12 +8,22 @@ use Illuminate\Support\Facades\Log;
 
 class ExchangeRateService
 {
+    protected $apiUrl;
+    protected $apiKey;
+    protected $symbols;
+
+    public function __construct()
+    {
+        $this->apiUrl = config('services.exchange_rates.api_url');
+        $this->apiKey = config('services.exchange_rates.api_key');
+        $this->symbols = config('services.exchange_rates.symbols');
+    }
+
     public function fetchAndStoreRates()
     {
-        $response = Http::get('http://api.exchangeratesapi.io/v1/latest', [
-            'access_key' => '8821a8b8456efe92aadbcfa56e491620',
-            // 'base' => 'USD', // Commented out since setting USD as base is not supported
-            'symbols' => 'USD,EUR,AUD,CAD,GBP,JPY,CHF,CNY,INR,MXN,ZAR' // Include USD in symbols
+        $response = Http::get($this->apiUrl, [
+            'access_key' => $this->apiKey,
+            'symbols' => $this->symbols
         ]);
 
         $data = $response->json();
