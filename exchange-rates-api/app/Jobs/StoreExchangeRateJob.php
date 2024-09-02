@@ -9,7 +9,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-
 use Illuminate\Support\Facades\Log;
 
 class StoreExchangeRateJob implements ShouldQueue
@@ -36,11 +35,10 @@ class StoreExchangeRateJob implements ShouldQueue
             ['name' => $this->currencyCode]
         );
 
-        ExchangeRate::create([
-            'currency_id' => $currency->id,
-            'date' => $this->date,
-            'rate' => $this->rate,
-        ]);
+        ExchangeRate::updateOrCreate(
+            ['currency_id' => $currency->id, 'date' => $this->date],
+            ['rate' => $this->rate]
+        );
 
         Log::info("Job completed for currency: {$this->currencyCode}");
     }

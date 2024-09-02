@@ -3,10 +3,8 @@
 namespace App\Http\Services;
 
 use Illuminate\Support\Facades\Http;
-use App\Models\Currency;
-use App\Models\ExchangeRate;
-use Illuminate\Support\Facades\Log;
 use App\Jobs\StoreExchangeRateJob;
+use Illuminate\Support\Facades\Log;
 
 class ExchangeRateService
 {
@@ -24,19 +22,8 @@ class ExchangeRateService
             $usdRate = $data['rates']['USD']; // Get the USD rate relative to the base currency
 
             foreach ($data['rates'] as $currencyCode => $rate) {
-                // Convert to USD if necessary
                 $rateInUsd = ($currencyCode === 'USD') ? $rate : $rate / $usdRate;
-
-                $currency = Currency::firstOrCreate(
-                    ['code' => $currencyCode],
-                    ['name' => $currencyCode]  // Assuming the currency code is used as the name
-                );
-
-                ExchangeRate::create([
-                    'currency_id' => $currency->id,
-                    'date' => now()->toDateString(),
-                    'rate' => $rateInUsd,
-                ]);
+                StoreExchangeRateJob::dispatch($currencyCode, $rateInUsd, now()->toDateString());
             }
         } else {
             Log::error('Failed to fetch rates or rates not available in response.');
