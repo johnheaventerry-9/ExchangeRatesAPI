@@ -54,7 +54,7 @@ Configure Mail Settings
 Edit the .env file with your mail server settings:
 
 
-
+// YOU WILL NEED TO go to mailer and create your own. and input them here. 
 MAIL_MAILER=smtp
 MAIL_HOST=sandbox.smtp.mailtrap.io
 MAIL_PORT=2525
@@ -113,3 +113,76 @@ php artisan queue:work
 Additional Information
 Automatic Data Updates: The fetchAndStoreRates method updates exchange rates daily and dispatches jobs to store the data.
 CSV Report Generation: A daily CSV report of exchange rates is generated and sent via email. This is triggered by the exchange-rates:send-report command.
+
+
+
+Please check over my .env for a better setup idea. 
+
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:yhmQWBtJFRTYUlqDuj3zEPGDQ7WCdlguWJZ9Pervl4c=
+APP_DEBUG=true
+APP_TIMEZONE=UTC
+APP_URL=http://localhost
+
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=en_US
+
+APP_MAINTENANCE_DRIVER=file
+# APP_MAINTENANCE_STORE=database
+
+BCRYPT_ROUNDS=12
+
+LOG_CHANNEL=stack
+LOG_STACK=single
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=scaffold
+DB_USERNAME=root
+DB_PASSWORD=
+
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+SESSION_PATH=/
+SESSION_DOMAIN=null
+
+BROADCAST_CONNECTION=log
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=database
+
+CACHE_STORE=database
+CACHE_PREFIX=
+
+MEMCACHED_HOST=127.0.0.1
+
+REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=c5ef4bfa2a853d
+MAIL_PASSWORD=583e491256f4bf
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=from@example.com
+MAIL_FROM_NAME="${APP_NAME}"
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+
+VITE_APP_NAME="${APP_NAME}"
+
+EXCHANGE_RATES_API_URL=http://api.exchangeratesapi.io/v1/latest
+EXCHANGE_RATES_API_KEY=8821a8b8456efe92aadbcfa56e491620
+EXCHANGE_RATES_API_SYMBOLS=USD,EUR,AUD,CAD,GBP,JPY,CHF,CNY,INR,MXN,ZAR
