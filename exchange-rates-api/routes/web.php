@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExchangeRateController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('exchange-rates/{date}', [ExchangeRateController::class, 'getRatesByDate']);
